@@ -8,9 +8,31 @@ url = "http://numbersapi.com/"
 def respond():
     req = request.args
     print(req)  #ImmutableiDict([('name', 'Neel')])
+    
+    connection = None
+    try:
+        connection = psycopg2.connect(user = "postgres",
+                                      password = "",
+                                      host = "localhost",
+                                      port = "5432",
+                                      database = "postgres")
 
+        cursor = connection.cursor()
+
+        select_Query= """INSERT INTO b6a (id,sname) VALUES(1,'sophea');"""
+        cursor.execute(select_Query)
+        connection.commit()
+    except (Exception, psycopg2.Error) as error :
+        print ("Error while connecting to PostgreSQL", error)
+
+    finally:
+        #closing database connection.
+            if(connection):
+                cursor.close()
+                connection.close()
+                print("PostgreSQL connection is closed")
+                
     return "You have reached the root endpoint"
-
 
 #curl -d '({"name":"advait","age":"21"})'
 #curl -d '{"name":"advait","age":"21"}' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/
