@@ -1,7 +1,6 @@
 from flask import Flask,request,jsonify
 import random
 import requests
-import psycopg2
 
 app = Flask(__name__)
 url = "http://numbersapi.com/"
